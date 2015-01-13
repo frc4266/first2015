@@ -1,12 +1,14 @@
 
 package org.usfirst.frc.team4266.robot;
 
-import org.usfirst.frc.team4266.robot.subsystems.DriveTrain;
 
+import org.usfirst.frc.team4266.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -25,6 +27,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
     Command autonomousCommand;
+    public SendableChooser autoChooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -34,17 +37,27 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
 		driveTrain = new DriveTrain();
+		
+		SmartDashboard.putData(driveTrain);
+		
         // instantiate the command used for the autonomous period
         //autonomousCommand = new ExampleCommand();
+		autoChooser = new SendableChooser();
+		//autoChooser.addDefault("Drive to Auto Zone", new AutonomousDrive());
+		//autoChooser.addObject("Lift Can and Drive", new AutonomousLiftAndDrive());
+		SmartDashboard.putData("Auto Mode", autoChooser);
     }
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		updateData();
 	}
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+        //if (autonomousCommand != null) autonomousCommand.start();
+    	autonomousCommand = (Command) autoChooser.getSelected();
+		autonomousCommand.start();
     }
 
     /**
@@ -52,6 +65,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        updateData();
     }
 
     public void teleopInit() {
@@ -67,7 +81,7 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit(){
-
+    	
     }
 
     /**
@@ -75,6 +89,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        updateData();
     }
     
     /**
@@ -83,4 +98,10 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
+    private void updateData() {
+		
+		//SmartDashboard.putNumber("Pivot Pot Value", Robot.pivot.getAngle());
+		//SmartDashboard.putNumber("Left Distance", drivetrain.getLeftEncoder().getDistance());
+		//SmartDashboard.putNumber("Right Distance", drivetrain.getRightEncoder().getDistance());
+	}
 }
