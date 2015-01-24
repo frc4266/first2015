@@ -16,14 +16,21 @@ public class RobotMap {
     // public static int rangefinderPort = 1;
     // public static int rangefinderModule = 1;
 	
-    public static final int joystick1 = 1;
+    public static final int driveStick = 1;
     public static final int joystick2 = 2;
     
     // jaguars
-    public static final int frontLeftMotor   = 4;//yellow
-    public static final int frontRightMotor  = 2;//uncolored
-    public static final int rearLeftMotor    = 3;//red
-    public static final int rearRightMotor   = 1;//blue
+    public static final int rightMotor   = 1;//blue
+    public static final int leftMotor  = 2;//red
+    
+    //encoders
+    public static final int rightEncoder1 = 1;
+    public static final int rightEncoder2 = 2;
+    public static final int leftEncoder1 = 3;
+    public static final int leftEncoder2 = 4;
+    
+    
+    
     
     
 	

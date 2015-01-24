@@ -33,7 +33,7 @@ public class OI {
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
-    public static final Joystick driveStick = new Joystick(RobotMap.joystick1);
+    public static final Joystick driveStick = new Joystick(RobotMap.driveStick);
     public static final Joystick liftStick = new Joystick(RobotMap.joystick2);
 }
 

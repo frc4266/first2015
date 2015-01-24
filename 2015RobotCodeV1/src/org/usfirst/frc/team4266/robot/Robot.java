@@ -2,7 +2,10 @@
 package org.usfirst.frc.team4266.robot;
 
 
+
+import org.usfirst.frc.team4266.robot.commands.AutoDriveToDistance;
 import org.usfirst.frc.team4266.robot.subsystems.DriveTrain;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -45,7 +48,7 @@ public class Robot extends IterativeRobot {
         // instantiate the command used for the autonomous period
         //autonomousCommand = new ExampleCommand();
 		autoChooser = new SendableChooser();
-		//autoChooser.addDefault("Drive to Auto Zone", new AutonomousDrive());
+		autoChooser.addDefault("Drive to Auto Zone", new AutoDriveToDistance(10,0.5));
 		//autoChooser.addObject("Lift Can and Drive", new AutonomousLiftAndDrive());
 		SmartDashboard.putData("Auto Mode", autoChooser);
     }
@@ -91,6 +94,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+       
         updateData();
     }
     
@@ -103,7 +107,8 @@ public class Robot extends IterativeRobot {
     private void updateData() {
 		
 		//SmartDashboard.putNumber("Pivot Pot Value", Robot.pivot.getAngle());
-		//SmartDashboard.putNumber("Left Distance", drivetrain.getLeftEncoder().getDistance());
-		//SmartDashboard.putNumber("Right Distance", drivetrain.getRightEncoder().getDistance());
+		SmartDashboard.putNumber("Left Distance", Robot.driveTrain.getLeftEncoder().getDistance());
+		SmartDashboard.putNumber("Right Distance", Robot.driveTrain.getRightEncoder().getDistance());
+		SmartDashboard.putNumber("Distance", Robot.driveTrain.getDistance());
 	}
 }
