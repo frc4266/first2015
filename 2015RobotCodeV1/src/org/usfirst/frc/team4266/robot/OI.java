@@ -1,6 +1,12 @@
 package org.usfirst.frc.team4266.robot;
 
+import org.usfirst.frc.team4266.robot.commands.LoadNextTote;
+import org.usfirst.frc.team4266.robot.commands.UnloadTotes;
+import org.usfirst.frc.team4266.robot.subsystems.ScissorLifter;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * controls on the physical operator
@@ -12,7 +18,7 @@ public class OI {
     // You create one by telling it which joystick it's on and which button
     // number it is.
     // Joystick stick = new Joystick(port);
-    // Button button = new JoystickButton(stick, buttonNumber);
+    // Button button = new JoystickButton(st ick, buttonNumber);
     
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
@@ -35,5 +41,33 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
     public static final Joystick driveStick = new Joystick(RobotMap.driveStick);
     public static final Joystick liftStick = new Joystick(RobotMap.joystick2);
+    
+    
+    public static Button loadToteButton = new JoystickButton(driveStick,2);
+    
+    public static Button unLoadToStep = new JoystickButton(driveStick,3);
+    
+    public static Button unLoadToScoring = new JoystickButton(driveStick,1);
+    
+    public static Button stopLoading = new JoystickButton(driveStick,11);
+    
+    
+    public OI (){
+    	loadToteButton.whenPressed(new LoadNextTote());
+    	unLoadToStep.whenPressed(new UnloadTotes(ScissorLifter.STEP_SETPOINT));
+    	unLoadToScoring.whenPressed(new UnloadTotes(ScissorLifter.SCORING_SETPOINT));
+    }
+    
+    /*
+     * Three light sensors
+     * Encoders - two new, two old encoders already on gear boxes
+     * Six magnetic switches
+     * 
+     * 
+     * 9 micro switches
+     * 
+     * 
+     * 
+     */
 }
 

@@ -3,8 +3,13 @@ package org.usfirst.frc.team4266.robot;
 
 
 
+import org.usfirst.frc.team4266.robot.commands.AutoDoNothing;
 import org.usfirst.frc.team4266.robot.commands.AutoDriveToDistance;
+import org.usfirst.frc.team4266.robot.subsystems.CanLifter;
+import org.usfirst.frc.team4266.robot.subsystems.Conveyor;
 import org.usfirst.frc.team4266.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4266.robot.subsystems.ScissorLifter;
+import org.usfirst.frc.team4266.robot.subsystems.ToteLifter;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -22,11 +27,55 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
+ */ 
+
+/*
+ * 2015RobotNotes
+ * 
+ * Subsystems
+ * 1.) Drive train - two motors
+ * 
+ * 2.) Conveyor - 1 motor
+ * 
+ * 		on until a tote is loaded
+ * 
+ * 3.) toteLifter - 1 motor
+ * 
+ * 		position for highest point
+ * 		position for lowest point
+ *      
+ * 
+ * 4.) scissorLifter - 1 motor
+ * 
+ * 		position for feeding, 
+ * 		position for step scoring, 
+ * 		position  for scoring platform(Lowest)
+ * 
+ * 5.) canLifter - 2 motors
+ * 		one motor up and down
+			 
+ * 		the other motor opens/closes on can
+ */
+
+/*
+ * Loading Procedure
+ * 1.) Scissor Lift to load position and toteLifter to top
+ * 2.) Turn on conveyor until tote loaded then conveyor off
+ * 3.) toteLifter to load position
+ * 4.) toteLifter lift to top
+ * 5.) repeat steps 2 to 5
  */
 public class Robot extends IterativeRobot {
+	
+	public static boolean isLoadingTote = false;
 
 	//Subsystems
 	public static DriveTrain driveTrain;
+	public static Conveyor conveyor;
+	public static ScissorLifter scissorLifter;
+	public static ToteLifter toteLifter;
+	public static CanLifter canLifter;
+	
 	
 	//public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
@@ -41,6 +90,8 @@ public class Robot extends IterativeRobot {
     
     public void robotInit() {
 		oi = new OI();
+		
+		//Create new subsystems
 		driveTrain = new DriveTrain();
 		
 		SmartDashboard.putData(driveTrain);
@@ -48,7 +99,8 @@ public class Robot extends IterativeRobot {
         // instantiate the command used for the autonomous period
         //autonomousCommand = new ExampleCommand();
 		autoChooser = new SendableChooser();
-		autoChooser.addDefault("Drive to Auto Zone", new AutoDriveToDistance(10,0.5));
+		autoChooser.addDefault("Drive to Auto Zone", new AutoDoNothing());
+		autoChooser.addObject("Drive to Auto Zone", new AutoDriveToDistance(10,0.5));
 		//autoChooser.addObject("Lift Can and Drive", new AutonomousLiftAndDrive());
 		SmartDashboard.putData("Auto Mode", autoChooser);
     }

@@ -24,10 +24,13 @@ public class RobotMap {
     public static final int leftMotor  = 2;//red
     
     //encoders
-    public static final int rightEncoder1 = 1;
-    public static final int rightEncoder2 = 2;
-    public static final int leftEncoder1 = 3;
-    public static final int leftEncoder2 = 4;
+    public static final int rightEncoder1 = 11;
+    public static final int rightEncoder2 = 12;
+    public static final int leftEncoder1 = 13;
+    public static final int leftEncoder2 = 14;
+    
+    
+    
     
     
     
