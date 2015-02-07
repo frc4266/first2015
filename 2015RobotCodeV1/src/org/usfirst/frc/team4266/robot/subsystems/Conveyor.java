@@ -2,10 +2,7 @@ package org.usfirst.frc.team4266.robot.subsystems;
 
 
 
-import org.usfirst.frc.team4266.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -38,10 +35,6 @@ public class Conveyor extends Subsystem {
     public boolean hasTote(){
     	//return sensor.get();
     	return false;
-    }
-    
-    public void updateStatus(){
-    	SmartDashboard.putBoolean("Loading Status", Robot.isLoadingTote);
     }
     
    

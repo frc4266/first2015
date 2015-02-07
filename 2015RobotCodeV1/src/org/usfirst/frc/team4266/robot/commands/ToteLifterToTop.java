@@ -12,7 +12,6 @@ public class ToteLifterToTop extends Command {
     public ToteLifterToTop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.toteLifter);
     }
 
     // Called just before this Command runs the first time

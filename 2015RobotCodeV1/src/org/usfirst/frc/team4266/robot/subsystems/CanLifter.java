@@ -19,13 +19,12 @@ public class CanLifter extends Subsystem {
 		
 	public CanLifter(){
 		// Sensors for measuring the position of the pivot.
-		//upperLimitSwitch = new DigitalInput(13);
-		//lowerLimitSwitch = new DigitalInput(12);
+		upperLimitSwitch = new DigitalInput(13);
+		lowerLimitSwitch = new DigitalInput(12);
 		
 		// Put everything to the LiveWindow for testing.
-		//LiveWindow.addSensor("Pivot", "Upper Limit Switch", upperLimitSwitch);
-		//LiveWindow.addSensor("Pivot", "Lower Limit Switch", lowerLimitSwitch);
-		
+		LiveWindow.addSensor("Pivot", "Upper Limit Switch", upperLimitSwitch);
+		LiveWindow.addSensor("Pivot", "Lower Limit Switch", lowerLimitSwitch);
 	}
 
     public void initDefaultCommand() {

@@ -1,12 +1,9 @@
 package org.usfirst.frc.team4266.robot.subsystems;
 
-import org.usfirst.frc.team4266.robot.Robot;
-
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -52,9 +49,5 @@ public class ScissorLifter extends PIDSubsystem {
 	public double getAngle() {
 		return pot.get();
 	}
-	
-	 public void updateStatus(){
-	    	
-	 }
 }
 
