@@ -3,7 +3,8 @@ package org.usfirst.frc.team4266.robot;
 
 
 
-import org.usfirst.frc.team4266.robot.commands.AutoDoNothing;
+
+import org.usfirst.frc.team4266.robot.commands.AutoDrive;
 import org.usfirst.frc.team4266.robot.commands.AutoDriveToDistance;
 import org.usfirst.frc.team4266.robot.subsystems.CanLifter;
 import org.usfirst.frc.team4266.robot.subsystems.Conveyor;
@@ -12,6 +13,7 @@ import org.usfirst.frc.team4266.robot.subsystems.ScissorLifter;
 import org.usfirst.frc.team4266.robot.subsystems.ToteLifter;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -68,6 +70,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 	
 	public static boolean isLoadingTote = false;
+	
+	Preferences prefs;
 
 	//Subsystems
 	public static DriveTrain driveTrain;
@@ -82,6 +86,8 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     public SendableChooser autoChooser;
+    double driveTime = 0;
+    boolean isDrivingForward = true;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -89,20 +95,29 @@ public class Robot extends IterativeRobot {
      */
     
     public void robotInit() {
-		oi = new OI();
+		
+    	prefs = Preferences.getInstance();
 		
 		//Create new subsystems
 		driveTrain = new DriveTrain();
+		conveyor = new Conveyor();
+		scissorLifter = new ScissorLifter();
+		toteLifter = new ToteLifter();
+		canLifter = new CanLifter();
+		
+		oi = new OI();
 		
 		SmartDashboard.putData(driveTrain);
+		SmartDashboard.putData(conveyor);
+		SmartDashboard.putData(scissorLifter);
+		SmartDashboard.putData(toteLifter);
+		SmartDashboard.putData(canLifter);
 		
         // instantiate the command used for the autonomous period
         //autonomousCommand = new ExampleCommand();
-		autoChooser = new SendableChooser();
-		autoChooser.addDefault("Drive to Auto Zone", new AutoDoNothing());
-		autoChooser.addObject("Drive to Auto Zone", new AutoDriveToDistance(10,0.5));
-		//autoChooser.addObject("Lift Can and Drive", new AutonomousLiftAndDrive());
-		SmartDashboard.putData("Auto Mode", autoChooser);
+		
+		
+		
     }
 	
 	public void disabledPeriodic() {
@@ -111,6 +126,15 @@ public class Robot extends IterativeRobot {
 	}
 
     public void autonomousInit() {
+    	driveTime = prefs.getDouble("AutoDriveTime",3);//Default drive time is 5 seconds
+    	isDrivingForward = prefs.getBoolean("AutoDriveForward", true);
+    	double autoDrivePower = prefs.getDouble("AutoDrivePower", 0.5);//Default Auto Power is 0.5
+    	autoChooser = new SendableChooser();
+		autoChooser.addDefault("Drive time from Smartdashboard", new AutoDrive(driveTime, isDrivingForward, autoDrivePower));
+		//autoChooser.addObject("Drive to Auto Zone", new AutoDriveToDistance(10,0.5));
+		//autoChooser.addObject("Lift Can and Drive", new AutonomousLiftAndDrive());
+		SmartDashboard.putData("Auto Mode", autoChooser);
+    	System.out.println("=====>" + driveTime);
         // schedule the autonomous command (example)
         //if (autonomousCommand != null) autonomousCommand.start();
     	autonomousCommand = (Command) autoChooser.getSelected();
@@ -157,10 +181,12 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
     }
     private void updateData() {
+    	 Robot.driveTrain.updateStatus();
+    	 Robot.conveyor.updateStatus();
 		
 		//SmartDashboard.putNumber("Pivot Pot Value", Robot.pivot.getAngle());
-		SmartDashboard.putNumber("Left Distance", Robot.driveTrain.getLeftEncoder().getDistance());
-		SmartDashboard.putNumber("Right Distance", Robot.driveTrain.getRightEncoder().getDistance());
-		SmartDashboard.putNumber("Distance", Robot.driveTrain.getDistance());
+		//SmartDashboard.putNumber("Left Distance", Robot.driveTrain.getLeftEncoder().getDistance());
+		//SmartDashboard.putNumber("Right Distance", Robot.driveTrain.getRightEncoder().getDistance());
+		//SmartDashboard.putNumber("Distance", Robot.driveTrain.getDistance());
 	}
 }

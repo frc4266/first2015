@@ -1,8 +1,11 @@
 package org.usfirst.frc.team4266.robot.subsystems;
 
+import org.usfirst.frc.team4266.robot.Robot;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -17,12 +20,12 @@ public class ToteLifter extends Subsystem {
 	
 	public ToteLifter(){
 		// Sensors for measuring the position of the pivot.
-		upperLimitSwitch = new DigitalInput(13);
-		lowerLimitSwitch = new DigitalInput(12);
+		//upperLimitSwitch = new DigitalInput(13);
+		//lowerLimitSwitch = new DigitalInput(12);
 		
 		// Put everything to the LiveWindow for testing.
-		LiveWindow.addSensor("ToteLifter", "Upper Limit Switch", upperLimitSwitch);
-		LiveWindow.addSensor("ToteLifter", "Lower Limit Switch", lowerLimitSwitch);
+		//LiveWindow.addSensor("ToteLifter", "Upper Limit Switch", upperLimitSwitch);
+		//LiveWindow.addSensor("ToteLifter", "Lower Limit Switch", lowerLimitSwitch);
 	}
 	
     public void initDefaultCommand() {
@@ -41,5 +44,9 @@ public class ToteLifter extends Subsystem {
 	public boolean isAtLowerLimit() {
 		return lowerLimitSwitch.get(); // TODO: inverted from real robot (prefix with !)
 	}
+	
+	 public void updateStatus(){
+	    	
+	 }
 }
 

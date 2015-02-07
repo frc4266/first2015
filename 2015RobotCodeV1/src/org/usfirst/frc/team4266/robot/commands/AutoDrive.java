@@ -7,30 +7,40 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ToteLifterToTop extends Command {
+public class AutoDrive extends Command {
 
-    public ToteLifterToTop() {
+	double howLong = 0;
+	boolean isDrivingForward = true;
+	double autoDrivePower = 0.5;
+	
+    public AutoDrive(double howLong, boolean isDrivingForward, double autoDrivePower) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.toteLifter);
+    	this.autoDrivePower = autoDrivePower;
+    	this.isDrivingForward = isDrivingForward;
+    	requires(Robot.driveTrain);
+    	this.howLong = howLong;
+    	this.setTimeout(howLong);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.driveTrain.autoDrive(autoDrivePower, isDrivingForward);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return this.isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.isLoadingTote = false;
+    	Robot.driveTrain.stopDrive();
     }
 
     // Called when another command which requires one or more of the same
